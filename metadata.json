@@ -1,0 +1,5 @@
+{
+  "name": "专业提示词生成器 (Professional Prompt Generator)",
+  "description": "一个利用专业提示词架构，帮助用户逐步构建高质量、专业级AI提示词的强大工具，适用于文本创作、图片生成和文档处理等多种任务。",
+  "requestFramePermissions": []
+}
