@@ -533,7 +533,7 @@ export const processAdaptiveConversation = async ({
     return {
       prompt: adaptiveResult.prompt,
       intent: adaptiveResult.intent || detectedIntent,
-      targetModel: adaptiveResult.targetModel || 'deepseek-ai/DeepSeek-V3',
+      targetModel: mapModelToTargetModel(model || 'deepseek-ai/DeepSeek-V3'), // 使用映射函数将模型ID转换为TargetModel枚举
       techniques: adaptiveResult.techniques || [],
       templateUsed: adaptiveResult.templateUsed || 'default',
       explanation: adaptiveResult.explanation || '生成的专业提示词已优化完成',
@@ -632,6 +632,27 @@ export const validateApiKey = async (apiKey: string): Promise<{ valid: boolean; 
       message: `网络错误: ${error instanceof Error ? error.message : '未知错误'}` 
     };
   }
+};
+
+// 将模型ID映射到TargetModel枚举
+const mapModelToTargetModel = (modelId: string): TargetModel => {
+  const model = modelId.toLowerCase();
+  
+  if (model.includes('deepseek')) {
+    return TargetModel.GPT;
+  } else if (model.includes('claude')) {
+    return TargetModel.CLAUDE;
+  } else if (model.includes('midjourney')) {
+    return TargetModel.MIDJOURNEY;
+  } else if (model.includes('stable') || model.includes('diffusion')) {
+    return TargetModel.STABLE_DIFFUSION;
+  } else if (model.includes('llama') || model.includes('glm') || model.includes('qwen')) {
+    return TargetModel.LLAMA;
+  } else if (model.includes('moonshot') || model.includes('kimi')) {
+    return TargetModel.GPT;
+  }
+  
+  return TargetModel.OTHER;
 };
 
 // 获取支持的模型列表
