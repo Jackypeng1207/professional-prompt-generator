@@ -639,17 +639,25 @@ const mapModelToTargetModel = (modelId: string): TargetModel => {
   const model = modelId.toLowerCase();
   
   if (model.includes('deepseek')) {
-    return TargetModel.DEEPSEEK; // 专门为DeepSeek模型设置
+    return TargetModel.DEEPSEEK; // DeepSeek系列
   } else if (model.includes('claude')) {
-    return TargetModel.CLAUDE;
+    return TargetModel.CLAUDE; // Claude系列
+  } else if (model.includes('gpt') || model.includes('openai')) {
+    return TargetModel.GPT; // GPT系列
+  } else if (model.includes('doubao') || model.includes('豆包') || model.includes('doupod')) {
+    return TargetModel.DOUBAO; // 豆包系列
   } else if (model.includes('midjourney')) {
-    return TargetModel.MIDJOURNEY;
+    return TargetModel.MIDJOURNEY; // Midjourney
   } else if (model.includes('stable') || model.includes('diffusion')) {
-    return TargetModel.STABLE_DIFFUSION;
+    return TargetModel.STABLE_DIFFUSION; // Stable Diffusion
   } else if (model.includes('llama') || model.includes('glm') || model.includes('qwen')) {
-    return TargetModel.LLAMA;
+    return TargetModel.LLAMA; // LLaMA系列
   } else if (model.includes('moonshot') || model.includes('kimi')) {
-    return TargetModel.GPT;
+    return TargetModel.GPT; // Kimi归为GPT系列
+  } else if (model.includes('baichuan') || model.includes('百川')) {
+    return TargetModel.OTHER; // 百川模型
+  } else if (model.includes('spark') || model.includes('讯飞')) {
+    return TargetModel.OTHER; // 讯飞星火
   }
   
   return TargetModel.OTHER;

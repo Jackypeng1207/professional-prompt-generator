@@ -37,6 +37,7 @@ export enum TargetModel {
   STABLE_DIFFUSION = 'Stable Diffusion',
   LLAMA = 'LLaMA',
   DEEPSEEK = 'DeepSeek系列',
+  DOUBAO = '豆包系列',
   OTHER = '其他'
 }
 
