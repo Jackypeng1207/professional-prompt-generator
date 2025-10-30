@@ -36,6 +36,7 @@ export enum TargetModel {
   MIDJOURNEY = 'Midjourney',
   STABLE_DIFFUSION = 'Stable Diffusion',
   LLAMA = 'LLaMA',
+  DEEPSEEK = 'DeepSeek系列',
   OTHER = '其他'
 }
 

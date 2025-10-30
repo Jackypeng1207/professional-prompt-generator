@@ -639,7 +639,7 @@ const mapModelToTargetModel = (modelId: string): TargetModel => {
   const model = modelId.toLowerCase();
   
   if (model.includes('deepseek')) {
-    return TargetModel.GPT;
+    return TargetModel.DEEPSEEK; // 专门为DeepSeek模型设置
   } else if (model.includes('claude')) {
     return TargetModel.CLAUDE;
   } else if (model.includes('midjourney')) {
