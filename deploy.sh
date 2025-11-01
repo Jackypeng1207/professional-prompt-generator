@@ -115,7 +115,6 @@ show_info() {
     log "Nginx服务端口：80 (HTTP)"
     log ""
     log "查看服务状态：docker-compose ps"
-    log "查看应用日志：docker-compose logs -f app"
     log "查看Nginx日志：docker-compose logs -f nginx"
     log "停止服务：docker-compose down"
     log "================"
