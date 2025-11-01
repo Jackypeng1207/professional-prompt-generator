@@ -1,7 +1,7 @@
 #!/bin/bash
 
-# 阿里云ECS部署脚本
-# 使用方法：./deploy.sh [环境]
+# 阿里云ECS服务器部署脚本
+# 此脚本在服务器上运行，用于部署已构建的应用
 
 set -e
 
@@ -53,44 +53,16 @@ backup() {
     fi
 }
 
-# 构建应用
-build_app() {
-    log "开始构建应用..."
-    
-    # 安装依赖
-    log "安装依赖包..."
-    npm install
-    
-    # 构建项目
-    log "构建项目..."
-    npm run build
-    
-    if [ $? -eq 0 ]; then
-        log "应用构建成功"
-    else
-        error "应用构建失败"
-    fi
-}
-
-# 构建Docker镜像
-build_docker() {
-    log "构建Docker镜像..."
-    
-    docker-compose build
-    
-    if [ $? -eq 0 ]; then
-        log "Docker镜像构建成功"
-    else
-        error "Docker镜像构建失败"
-    fi
-}
-
 # 停止当前服务
 stop_services() {
     log "停止当前服务..."
     
-    docker-compose down || warn "停止服务时出现警告"
-    log "服务已停止"
+    if [ -f "docker-compose.yml" ]; then
+        docker-compose down || warn "停止服务时出现警告"
+        log "服务已停止"
+    else
+        warn "未找到docker-compose.yml文件，跳过停止服务"
+    fi
 }
 
 # 启动服务
@@ -119,8 +91,8 @@ health_check() {
     sleep 5
     
     # 检查应用是否响应
-    if curl -f http://localhost:3000 > /dev/null 2>&1; then
-        log "健康检查通过"
+    if curl -f http://localhost:80 > /dev/null 2>&1; then
+        log "健康检查通过 - 网站可正常访问"
     else
         warn "健康检查未通过，但继续部署"
     fi
@@ -139,34 +111,30 @@ cleanup() {
 # 显示部署信息
 show_info() {
     log "=== 部署完成 ==="
-    log "应用地址：http://localhost:3000"
-    log "Nginx地址：http://localhost:80 (HTTP)"
-    log "Nginx地址：https://localhost:443 (HTTPS)"
+    log "网站地址：http://120.55.6.96"
+    log "Nginx服务端口：80 (HTTP)"
     log ""
     log "查看服务状态：docker-compose ps"
-    log "查看日志：docker-compose logs -f"
+    log "查看应用日志：docker-compose logs -f app"
+    log "查看Nginx日志：docker-compose logs -f nginx"
     log "停止服务：docker-compose down"
     log "================"
 }
 
 # 主函数
 main() {
-    local environment=${1:-production}
+    log "开始阿里云ECS服务器部署"
     
-    log "开始部署到 ${environment} 环境"
-    
-    # 执行部署步骤
+    # 执行部署步骤（在服务器上只运行部署相关步骤）
     check_dependencies
     backup
-    build_app
-    build_docker
     stop_services
     start_services
     health_check
     cleanup
     show_info
     
-    log "部署完成！"
+    log "部署完成！网站已上线：http://120.55.6.96"
 }
 
 # 脚本入口
