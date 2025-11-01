@@ -1,24 +1,11 @@
 version: '3.8'
 
 services:
-  prompt-generator:
-    build: .
-    ports:
-      - "3000:3000"
-    restart: unless-stopped
-    environment:
-      - NODE_ENV=production
-    volumes:
-      - ./logs:/app/logs
-    
   nginx:
     image: nginx:alpine
     ports:
       - "80:80"
-      - "443:443"
     volumes:
       - ./nginx.conf:/etc/nginx/nginx.conf
-      - ./ssl:/etc/nginx/ssl
-    depends_on:
-      - prompt-generator
+      - ./dist:/usr/share/nginx/html:ro
     restart: unless-stopped

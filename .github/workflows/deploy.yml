@@ -24,15 +24,14 @@ jobs:
     - name: Build project
       run: npm run build
       
-    - name: Create deployment package
-      run: |
-        mkdir -p deployment
-        cp -r dist deployment/
-        cp Dockerfile deployment/
-        cp docker-compose.yml deployment/
-        cp nginx.conf deployment/
-        cp deploy.sh deployment/
-        tar -czf deployment.tar.gz deployment/
+    - name: Create deployment package 
+       run: | 
+         mkdir -p deployment 
+         cp -r dist deployment/ 
+         cp docker-compose.yml deployment/ 
+         cp nginx.conf deployment/ 
+         cp deploy.sh deployment/ 
+         tar -czf deployment.tar.gz deployment/
         
     - name: Deploy to Aliyun ECS
       uses: appleboy/scp-action@v0.1.3
