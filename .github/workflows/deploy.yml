@@ -1,4 +1,4 @@
-name: Deploy to Coding Pages
+name: Deploy to Aliyun ECS
 
 on:
   push:
@@ -24,12 +24,37 @@ jobs:
     - name: Build project
       run: npm run build
       
-    - name: Deploy to GitHub Pages
-      uses: peaceiris/actions-gh-pages@v3
-      with:
-        github_token: ${{ secrets.GITHUB_TOKEN }}
-        publish_dir: ./dist
-        publish_branch: gh-pages
+    - name: Create deployment package
+      run: |
+        mkdir -p deployment
+        cp -r dist deployment/
+        cp Dockerfile deployment/
+        cp docker-compose.yml deployment/
+        cp nginx.conf deployment/
+        cp deploy.sh deployment/
+        tar -czf deployment.tar.gz deployment/
         
+    - name: Deploy to Aliyun ECS
+      uses: appleboy/scp-action@v0.1.3
+      with:
+        host: ${{ secrets.ALIYUN_HOST }}
+        username: ${{ secrets.ALIYUN_USERNAME }}
+        key: ${{ secrets.ALIYUN_SSH_KEY }}
+        source: "deployment.tar.gz"
+        target: "/home/ubuntu/"
+        
+    - name: Execute deployment on server
+      uses: appleboy/ssh-action@v1.0.3
+      with:
+        host: ${{ secrets.ALIYUN_HOST }}
+        username: ${{ secrets.ALIYUN_USERNAME }}
+        key: ${{ secrets.ALIYUN_SSH_KEY }}
+        script: |
+          cd /home/ubuntu
+          tar -xzf deployment.tar.gz
+          cd deployment
+          chmod +x deploy.sh
+          ./deploy.sh
+          
     - name: Deploy status
-      run: echo "🎉 Coding Pages 部署完成！网站已更新"
+      run: echo "🎉 阿里云ECS部署完成！网站已上线：http://120.55.6.96"
