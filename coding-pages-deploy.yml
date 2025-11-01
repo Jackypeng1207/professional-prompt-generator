@@ -1,3 +1,4 @@
+# Coding Pages 部署配置
 name: Deploy to Coding Pages
 
 on:
@@ -24,7 +25,7 @@ jobs:
     - name: Build project
       run: npm run build
       
-    - name: Deploy to GitHub Pages
+    - name: Upload to Coding Pages
       uses: peaceiris/actions-gh-pages@v3
       with:
         github_token: ${{ secrets.GITHUB_TOKEN }}
@@ -32,4 +33,4 @@ jobs:
         publish_branch: gh-pages
         
     - name: Deploy status
-      run: echo "🎉 Coding Pages 部署完成！网站已更新"
+      run: echo "🎉 Coding Pages 部署完成！"
