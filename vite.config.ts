@@ -19,6 +19,8 @@ export default defineConfig(({ mode }) => {
         alias: {
           '@': path.resolve(__dirname, '.'),
         }
-      }
+      },
+      // GitHub Pages部署配置
+      base: process.env.NODE_ENV === 'production' ? '/professional-prompt-generator/' : '/'
     };
 });

@@ -13,17 +13,7 @@
 
 ## 🚀 快速开始
 
-### 方法一：使用启动脚本（推荐）
-
-```bash
-# 给启动脚本添加执行权限
-chmod +x start.sh
-
-# 运行启动脚本
-./start.sh
-```
-
-### 方法二：手动启动
+### 本地运行
 
 ```bash
 # 安装依赖
@@ -59,6 +49,29 @@ SILICONFLOW_API_KEY=your_siliconflow_api_key_here
 # Google AI Studio配置（可选）
 API_KEY=your_google_ai_api_key_here
 ```
+
+## 🌐 部署到Vercel
+
+### 最简单的部署方式
+
+1. **连接GitHub仓库**
+   - 访问 [Vercel](https://vercel.com)
+   - 使用GitHub账号登录
+   - 点击"Add New..." → "Project"
+   - 选择你的GitHub仓库
+
+2. **配置环境变量**
+   - 在Vercel项目设置中添加环境变量：
+   - `SILICONFLOW_API_KEY`: 你的硅基流动API密钥
+   - `API_KEY`: 你的Google Gemini API密钥（可选）
+
+3. **部署**
+   - 点击"Deploy"按钮
+   - 等待部署完成，即可访问你的应用
+
+### 自动部署
+
+配置完成后，每次你推送代码到GitHub仓库，Vercel会自动重新部署你的应用。
 
 ## 📋 使用指南
 
@@ -123,23 +136,4 @@ npm run preview
 
 ## 📄 许可证
 
-MIT License<div align="center">
-<img width="1200" height="475" alt="GHBanner" src="https://github.com/user-attachments/assets/0aa67016-6eaf-458a-adb2-6e31a0763ed6" />
-</div>
-
-# Run and deploy your AI Studio app
-
-This contains everything you need to run your app locally.
-
-View your app in AI Studio: https://ai.studio/apps/drive/1GPsrUviLXCVEWqu0PhTVwjBaIdd_rSZT
-
-## Run Locally
-
-**Prerequisites:**  Node.js
-
-
-1. Install dependencies:
-   `npm install`
-2. Set the `GEMINI_API_KEY` in [.env.local](.env.local) to your Gemini API key
-3. Run the app:
-   `npm run dev`
+MIT License
